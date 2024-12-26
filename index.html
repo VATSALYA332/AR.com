@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR with Foreground Image</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .arjs-loader {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .foreground-image {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for centering */
+            z-index: 10000; /* Ensure it is above AR content */
+        }
+
+        .foreground-image img {
+            width: 400px; /* Set width to 400 pixels */
+            height: auto; /* Set height to auto to maintain aspect ratio */
+        }
+
+        /* Responsive adjustments for mobile devices */
+        @media (max-width: 600px) {
+            .foreground-image img {
+                width: 80%; /* Set width to 80% of the viewport width */
+                height: auto; /* Maintain aspect ratio */
+                max-width: 300px; /* Limit max width for smaller screens */
+            }
+        }
+
+        /* Button and text box styles */
+        .controls {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for centering */
+            z-index: 10001; /* Ensure it is above AR content */
+            text-align: center; /* Center text within the controls div */
+        }
+
+        .start-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .text-box {
+            margin-top: 10px;
+            font-size: 50px; /* Set font size to 50 pixels */
+            color: black; /* Text color set to black */
+        }
+
+        .hidden {
+            display: none; /* Class to hide elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="arjs-loader">Loading AR content...</div>
+
+    <div class="controls">
+        <button class="start-button">Start</button>
+        <div class="text-box">MADE BY VATSALYA</div> <!-- Text box below the button -->
+    </div>
+
+    <div class="foreground-image hidden">
+        <img src="https://lh5.googleusercontent.com/jxBzG7z139LjF6IWOvBxeT-fTvliCt01GNTboUCH4gaducaHnOJkRr4t6YRveSMY-Tas_kIhsZ9hjm6DHcjqTFkH8cFOGKWF6oDdhE5Q0l_Fr90bJP5jDUkg5jh3M4vS6g=w1280" alt="Foreground Image">
+    </div>
+
+    <a-scene id="ar-scene" embedded arjs='sourceType: webcam;' class="hidden">
+        <a-marker preset='hiro'>
+            <a-box position='0 0.5 0' material='color: red;'></a-box>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Hide loader once AR content is ready
+        const loader = document.querySelector('.arjs-loader');
+        
+        // Function to show foreground image
+        function showForegroundImage() {
+            // Hide controls
+            document.querySelector('.controls').classList.add('hidden');
+            
+            // Show foreground image
+            document.querySelector('.foreground-image').classList.remove('hidden');
+            
+            // Optionally, you can start AR technology here if needed
+        }
+
+        // Add functionality to the Start button
+        document.querySelector('.start-button').addEventListener('click', showForegroundImage);
+        
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+            loader.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
